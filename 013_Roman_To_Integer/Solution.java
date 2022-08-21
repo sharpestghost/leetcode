@@ -1,0 +1,49 @@
+class Solution {
+    public int romanToInt(String s) {
+        int number = 0;
+        int lastNumber = 0;
+        int preNumber = 0;
+        for (int i=0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                case 'I':
+                    lastNumber = 1;
+                    break;
+                case 'V':
+                    lastNumber = 5;
+                    break;
+                case 'X':
+                    lastNumber = 10;
+                    break;
+                case 'L':
+                    lastNumber = 50;
+                    break;
+                case 'C':
+                    lastNumber = 100;
+                    break;
+                case 'D':
+                    lastNumber = 500;
+                    break;
+                case 'M':
+                    lastNumber = 1000;
+                    break;
+            }
+            if (preNumber != 0) {
+                if (lastNumber == 5 * preNumber || lastNumber == 10 * preNumber) {
+                    lastNumber -= preNumber;
+                } else {
+                    number += preNumber;
+                }
+                preNumber = 0;
+            }
+            if (lastNumber == 1 || lastNumber == 10 || lastNumber == 100) {
+                preNumber = lastNumber;
+            } else {
+                number += lastNumber;
+            }
+        }
+        number += preNumber;
+        return number;
+    }
+
+}
