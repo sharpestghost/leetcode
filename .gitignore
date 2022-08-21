@@ -97,4 +97,8 @@ fabric.properties
 .idea/httpRequests
 
 # Android studio 3.1+ serialized cache file
+<<<<<<< HEAD
 .idea/caches/build_file_checksums.ser
+=======
+.idea/caches/build_file_checksums.ser
+>>>>>>> b48ce12 (test commit)
