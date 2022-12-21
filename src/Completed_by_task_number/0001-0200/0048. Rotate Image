@@ -1,0 +1,16 @@
+//Time complexity: O(N^2), space complexity: O(1), scope: matrix
+class Solution {
+    public void rotate(int[][] matrix) {
+        int n = matrix.length - 1;
+        int k = n;
+        for (int i = 0; i <= k; ++i, --k) {
+            for (int j = i; j < k; j++) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - j][i];
+                matrix[n - j][i] = matrix[n - i][n - j];
+                matrix[n - i][n - j] = matrix[j][n - i];
+                matrix[j][n - i] = temp;
+            }
+        }
+    }
+}
