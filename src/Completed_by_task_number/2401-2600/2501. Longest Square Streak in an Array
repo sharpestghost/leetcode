@@ -1,0 +1,16 @@
+//Longest Subsequences (???), Squares (Math), HashMap
+class Solution {
+    public int longestSquareStreak(int[] nums) {
+        Arrays.sort(nums);
+        Map<Integer, Integer> streakMap = new HashMap();
+        int max = -1;
+        for (int el: nums) {
+            if (streakMap.containsKey(el)) {
+                int val = streakMap.get(el);
+                if (val > max) max = val;
+                streakMap.put(el * el, ++val);
+            } else streakMap.put(el * el, 2);
+        }
+        return max;
+    }
+}

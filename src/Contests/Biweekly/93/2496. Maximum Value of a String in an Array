@@ -1,0 +1,22 @@
+//Tag: String, String to Integer (String), Max (Array)
+class Solution {
+    public int maximumValue(String[] strs) {
+        int max = 0;
+        for (String s: strs) {
+            int val = getValue(s);
+            if (val > max) max = val;
+        }
+        return max;
+    }
+
+    private int getValue(String s) {
+        boolean isNumber = true;
+        for (char c: s.toCharArray()) {
+            if (c < '0' || c > '9') {
+                isNumber = false;
+                break;
+            }
+        }
+        return (isNumber) ? Integer.valueOf(s) : s.length();
+    }
+}

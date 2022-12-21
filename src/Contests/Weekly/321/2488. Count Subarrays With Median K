@@ -1,0 +1,28 @@
+//Tags: HashMap
+class Solution {
+    public int countSubarrays(int[] nums, int k) {
+        int ind = findMed(nums, k);
+        int res = 0;
+        if (ind == -1) return 0;
+        Map<Integer, Integer> beforeSums = new HashMap();
+        int befCnt = 0, aftCnt = 0;
+        beforeSums.put(0, 1);
+        for (int i = ind - 1; i >= 0; i--) {
+            befCnt += (nums[i] > k) ? 1 : -1;
+            beforeSums.merge(befCnt, 1, Integer::sum);
+        }
+        for (int i = ind + 1; i < nums.length; i++) {
+            res += (beforeSums.getOrDefault(aftCnt, 0) + beforeSums.getOrDefault(aftCnt + 1, 0));
+            aftCnt += (nums[i] < k) ? 1 : -1;
+        }
+        res += (beforeSums.getOrDefault(aftCnt, 0) + beforeSums.getOrDefault(aftCnt + 1, 0));
+        return res;
+    }
+
+     int findMed(int[] nums, int k) {
+         for (int i = 0; i < nums.length; i++) {
+             if (nums[i] == k) return i;
+        }
+        return -1;
+    }
+}

@@ -1,0 +1,17 @@
+//Tags: Highest in a row, Sorting (Matrix)
+class Solution {
+    public int deleteGreatestValue(int[][] grid) {
+        for (int i = 0; i < grid.length; i++) {
+            Arrays.sort(grid[i]);
+        }
+        int sum = 0;
+        for (int i = 0; i < grid[0].length; i++) {
+            int max = grid[0][i];
+            for (int j = 1; j < grid.length; j++) {
+                if (grid[j][i] > max) max = grid[j][i];
+            }
+            sum += max;
+        }
+        return sum;
+    }
+}

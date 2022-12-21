@@ -1,0 +1,26 @@
+//Tag: Two Pointers, Min (Array)
+class Solution {
+    public int bestClosingTime(String customers) {
+        char[] cust = customers.toCharArray();
+        int n = cust.length;
+        int[] pen = new int[n + 1];
+        int y_cnt = 0, n_cnt = 0;
+        for (int i = 1; i <= n; i++) {
+            pen[n - i] += (cust[n - i] == 'Y') ? ++y_cnt : y_cnt;
+            pen[i] += (cust[i - 1] == 'N') ? ++n_cnt : n_cnt;
+        }
+        return findMinHour(pen);
+    }
+
+    private int findMinHour(int[] pen) {
+        int hour = 0;
+        int minPen = pen[0];
+        for (int i = 1; i < pen.length; i++) {
+            if (pen[i] < minPen) {
+                minPen = pen[i];
+                hour = i;
+            }
+        }
+        return hour;
+    }
+}

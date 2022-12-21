@@ -1,0 +1,47 @@
+class Solution {
+    //Init variables for array indexes during the median search
+    //Init variable of which array the last element was passed (false - first, true - second)
+    int index_n1 = 0, index_n2 = 0; boolean lastAdd = false;
+
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        //Calculate sum length of arrays
+        int sumSize = nums1.length + nums2.length;
+        //Move to array median
+        moveToTheNext(nums1, nums2, (sumSize + 1) / 2);
+        if (sumSize % 2 == 0) {
+            //Get left middle item in even array
+            int el1 = (lastAdd) ? nums2[index_n2 - 1] : nums1[index_n1 - 1];
+            //Get right middle item in even array
+            moveToTheNext(nums1, nums2, 1);
+            el1 += (lastAdd) ? nums2[index_n2 - 1] : nums1[index_n1 - 1];
+            //Return array median
+            return (double) el1 / 2;
+        } else {
+            //Return array median
+            return (lastAdd) ? nums2[index_n2 - 1] : nums1[index_n1 - 1];
+        }
+
+    }
+
+    private void moveToTheNext(int[] nums1, int[] nums2, int cnt) {
+        while (cnt > 0) {
+            //Move to array median through second array if first array is passed
+        if (index_n1 == nums1.length) {
+            lastAdd = true;
+            index_n2 += cnt;
+            break;
+        }
+        if (index_n2 == nums2.length) {
+             //Move to array median through first array if second array is passed
+            lastAdd = false;
+            index_n1 += cnt;
+            break;
+        }
+        //Compare the current elements from two arrays and move to the next element
+        lastAdd = (nums1[index_n1] > nums2[index_n2]);
+        if (lastAdd) index_n2++;
+        else index_n1++;
+        cnt--;
+        }
+    }
+}

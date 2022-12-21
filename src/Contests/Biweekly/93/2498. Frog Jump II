@@ -1,0 +1,9 @@
+//Greedy, C++ funny solution
+class Solution {
+    public:
+    int maxJump(vector<int>& stones) {
+        int res = stones[1]-stones[0]; // store max difference
+        for(int i = 2; i < stones.size(); i++) res = max(res, stones[i]-stones[i-2]); // even path
+        return res;
+    }
+};

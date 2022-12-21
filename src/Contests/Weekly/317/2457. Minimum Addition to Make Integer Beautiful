@@ -1,0 +1,43 @@
+class Solution {
+    public long makeIntegerBeautiful(long n, int target) {
+        if (getFirstDigit(n) >= target && getFirstDigit(n) != findSumOfDigits(n) || getFirstDigit(n) > target) {
+            return (long) Math.pow(10,getDigitCount(n)) - n;
+        }
+        int digitsSum = findSumOfDigits(n);
+        return findNewNumber(n, target, digitsSum) - n;
+    }
+
+    private int findSumOfDigits(long n) {
+        int sum = 0;
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
+    }
+
+    private long findNewNumber(long n, int target, int digitsSum) {
+        int order = 0;
+        while (digitsSum > target) {
+            n /= 10;
+            n++;
+            order++;
+            digitsSum = findSumOfDigits(n);
+            System.out.println(digitsSum);
+        }
+        return n * (long) Math.pow(10, order);
+    }
+
+    private long getFirstDigit(long x) {
+        while (x > 9) {
+            x /= 10;
+        }
+        return x;
+    }
+
+    private int getDigitCount(long n) {
+        int count = 0;
+        for(; n!= 0; n/=10, ++count);
+        return count;
+    }
+}

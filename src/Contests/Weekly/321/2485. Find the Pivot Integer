@@ -1,0 +1,10 @@
+//Tags: Triangle number (Math)
+class Solution {
+    public int pivotInteger(int n) {
+        if (n == 1) return 1;
+        int sumToInt = n * (n + 1) >> 1;
+        int tr = (int) Math.sqrt(sumToInt);
+        return (tr * tr == sumToInt) ? tr : -1;
+
+    }
+}

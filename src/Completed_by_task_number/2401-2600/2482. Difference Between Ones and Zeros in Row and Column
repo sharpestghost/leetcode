@@ -1,0 +1,23 @@
+//Tag: Sum (Matrix)
+class Solution {
+    public int[][] onesMinusZeros(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[] oneRows = new int[m];
+        int[] oneCols = new int[n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1) {
+                    oneRows[i]++;
+                    oneCols[j]++;
+                }
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                grid[i][j] = 2 * (oneRows[i] + oneCols[j]) - m - n;
+            }
+        }
+        return grid;
+    }
+}

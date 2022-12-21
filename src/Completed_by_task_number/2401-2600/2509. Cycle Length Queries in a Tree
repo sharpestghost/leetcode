@@ -1,0 +1,19 @@
+//Tags: Complete Binary Tree, Tree Search (Tree)
+class Solution {
+    public int[] cycleLengthQueries(int n, int[][] queries) {
+        int[] answer = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int a = queries[i][0], b = queries[i][1];
+            int len = 1;
+            while (a != b) {
+                if (a > b) {
+                    a >>= 1;
+                } else b >>= 1;
+                len++;
+            }
+            answer[i] = len;
+        }
+        return answer;
+    }
+
+}

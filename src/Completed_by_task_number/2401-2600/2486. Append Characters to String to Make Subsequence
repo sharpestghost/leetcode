@@ -1,0 +1,11 @@
+//Tags: Subsequence, O(N) ()
+class Solution {
+    public int appendCharacters(String s, String t) {
+        if (t.length() == 0) return 0;
+        int st = 0;
+        for (int i = 0; i < s.length() && st < t.length(); i++) {
+            if (s.charAt(i) == t.charAt(st)) st++;
+        }
+        return t.length() - st;
+    }
+}

@@ -1,0 +1,19 @@
+class Solution {
+    public int maxArea(int[] height) {
+        //need to find O(nlogn) or O(n) tc solution
+        int n = height.length;
+        int maxArea = 0;
+        int[] dp = new int[n];
+        int max = height[0];
+        for (int i = 1; i < n; i++) {
+            if (height[i] > max) max = height[i];
+        }
+        for (int i = 0; i < n - 1 && maxArea <= max * (n - i); i++) {
+            for (int j = i + 1; j < n; j++) {
+                int area = (j - i) * Math.min(height[i], height[j]);
+                if (maxArea < area) maxArea = area;
+            }
+        }
+        return maxArea;
+        }
+}

@@ -1,0 +1,31 @@
+class Solution {
+    public String intToRoman(int num) {
+       StringBuilder result = new StringBuilder();
+       result.append(addPlance('I', 'V', 'X', num));
+       num /= 10;
+       result.append(addPlance('X', 'L', 'C', num));
+       num /= 10;
+       result.append(addPlance('C', 'D', 'M', num));
+       while (num >= 10) {
+           result.append('M');
+           num -= 10;
+       }
+       return result.reverse().toString();
+    }
+
+    private StringBuilder addPlance(char one, char five, char ten, int num) {
+         StringBuilder result = new StringBuilder();
+         if (num % 5 <= 3) {
+           for (int i = 0; i < num % 5; i++) {
+           result.append(one);
+           }
+           if (num % 10 >= 5) {
+              result.append(five);
+           }
+       } else {
+           result.append((num % 10 >= 5) ? ten : five);
+           result.append(one);
+       }
+       return result;
+    }
+}

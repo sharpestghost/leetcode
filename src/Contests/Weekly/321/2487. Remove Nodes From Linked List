@@ -1,0 +1,21 @@
+//Tags: Stack, Deletion from List, Reverse (LinkedList)
+class Solution {
+    public ListNode removeNodes(ListNode head) {
+        if (head == null || head.next == null) return head;
+        Deque<ListNode> descList = new ArrayDeque<>();
+        descList.push(head);
+        while (head.next != null) {
+            head = head.next;
+            while (!descList.isEmpty() && descList.peek().val < head.val)
+            descList.pop();
+            descList.push(head);
+        }
+        head = descList.pop();
+        while (!descList.isEmpty()) {
+            ListNode temp = descList.pop();
+            temp.next = head;
+            head = temp;
+        }
+        return head;
+    }
+}

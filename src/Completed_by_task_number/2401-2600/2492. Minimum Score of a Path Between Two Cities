@@ -1,0 +1,43 @@
+//weird solution, need to retake later
+class Solution {
+
+    public int minScore(int n, int[][] roads) {
+        //put all road in outer map
+        Set<Integer> starts = new HashSet<>();
+        starts.add(1);
+        int min = Integer.MAX_VALUE;
+        Map<Integer, Map<Integer, Integer>> outer = new HashMap();
+        for (int[] r: roads) {
+            Map<Integer, Integer> inner = new HashMap();
+            if (outer.containsKey(r[0])) {
+               inner = outer.get(r[0]);
+            }
+            inner.put(r[1], r[2]);
+            outer.put(r[0], inner);
+            //addendum for backward motion
+            if (outer.containsKey(r[1])) {
+                inner = outer.get(r[1]);
+            } else inner = new HashMap();
+            inner.put(r[0], r[2]);
+            outer.put(r[1], inner);
+        }
+        while (starts.size() > 0) {
+            int el = starts.iterator().next();
+            if (outer.containsKey(el)) {
+            Map<Integer, Integer> inner = outer.get(el);
+            for (Map.Entry<Integer, Integer> entry : inner.entrySet()) {
+                starts.add(entry.getKey());
+                int distance = entry.getValue();
+                if (distance == 1) return 1;
+                if (min > distance) min = distance;
+            }
+            outer.remove(el);
+            }
+            starts.remove(el);
+        }
+
+        return min;
+    }
+
+
+}

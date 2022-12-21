@@ -1,0 +1,18 @@
+//Tag: Sorting
+class Solution {
+    public long dividePlayers(int[] skill) {
+        int sum = 0;
+        int n = skill.length / 2;
+        for (int sk: skill) sum += sk;
+        if (sum % n != 0) return -1;
+        int avg = sum / n;
+        Arrays.sort(skill);
+        long result = 0;
+        for (int i = 0; i < n; i++) {
+            if (skill[i] + skill[skill.length - i - 1] == avg) result += skill[i] * skill[skill.length - i - 1];
+            else return -1;
+        }
+        return result;
+
+    }
+}

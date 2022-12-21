@@ -1,0 +1,73 @@
+Tags: Edges to Graph (Graph), Unique edges (Graph)
+//Solution with HashSet[]
+class Solution {
+    public boolean isPossible(int n, List<List<Integer>> edges) {
+        //Initialize array of lists where each list is list of links of this node
+        Set<Integer>[] neighboursMap = new HashSet[n + 1];
+        Arrays.setAll(neighboursMap, i -> new HashSet<Integer>());
+        boolean result = false;
+        //Fill array of lists
+        for (List<Integer> edge: edges) {
+            int a = edge.get(0), b = edge.get(1);
+            neighboursMap[a].add(b);
+            neighboursMap[b].add(a);
+        }
+        //Find all (no more than 4) nodes and their edges where node have odd edges degree
+        List<Set<Integer>> oddDegreeEdges = new ArrayList<>();
+        //It is possible to connect no more than 4 nodes with 2 edges
+        int[] oddNodes = new int[4];
+        int oddCnt = 0;
+        //
+        for (int i = 1; i <= n; i++) {
+            if (neighboursMap[i].size() % 2 == 1) {
+                //If there are more than 4 odd-degree nodes, there is no need to check the nodes anymore,
+                //because the return will always be false
+                if (oddCnt++ == 4) break;
+                //Else add odd-degree node and their edges
+                oddDegreeEdges.add(neighboursMap[i]);
+                oddNodes[oddCnt - 1] = i;
+            }
+        }
+        System.out.println(oddCnt);
+        switch (oddCnt) {
+            case 0:
+                //All nodes here have even degree, so result is true
+                result = true;
+                break;
+            case 2:
+                //There are 2 nodes with odd degree. Make the degree of each node in the graph even is possible in 2 variants:
+                //1) There is no edge between these two nodes, so after their connection all nodes will have an even degree;
+                if (!oddDegreeEdges.get(0).contains(oddNodes[1])) return true;
+                //2) There is any other node that isn't connected with both of these nodes with odd degree.
+                //After adding a *new* connection between odd-degree nodes and other even-degree node all nodes will have even degree.
+                for (int i = 1; i <= n; i++) {
+                    if (i == oddNodes[0] || i == oddNodes[1]) continue;
+                    Set<Integer> otherNode = neighboursMap[i];
+                    if (!otherNode.contains(oddNodes[0]) && !otherNode.contains(oddNodes[1])) {
+                        result = true;
+                        break;
+                    }
+                }
+                break;
+            case 4:
+                //There are 4 nodes with odd degree. Make the degree of each node in the graph even
+                //is only possible, when there is no edge between first node and any other of these nodes
+                //and no edge between other two. So, result is true if there no edge between nodes A and D and between nodes B and C
+                //or no edge between nodes A and C and between nodes B and D or no edge between nodes A and B and between nodes C and D.
+                ///A, B, C, D - elements of an oddNodes array with index 0 - 3
+               /* System.out.println(b1 + " " + b2 + " " + b3);
+                System.out.println(Arrays.toString(oddNodes));
+                for (int i = 0; i < oddDegreeEdges.size(); i++)
+                System.out.println(oddDegreeEdges.get(i).toString()); */
+                if (!oddDegreeEdges.get(0).contains(oddNodes[3]) && !oddDegreeEdges.get(1).contains(oddNodes[2]) ||
+                    !oddDegreeEdges.get(0).contains(oddNodes[2]) && !oddDegreeEdges.get(1).contains(oddNodes[3]) ||
+                    !oddDegreeEdges.get(0).contains(oddNodes[1]) && !oddDegreeEdges.get(2).contains(oddNodes[3]))
+                    result = true;
+                    break;
+                //If there more than 4 nodes with odd degree, result is false, because we can connect only four nodes with two edges
+                default:
+                break;
+        }
+        return result;
+    }
+}

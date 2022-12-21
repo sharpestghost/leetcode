@@ -1,0 +1,18 @@
+//Tags: Frequency table (HashMap), Non-repeatable values (HashSet), Triangle number (Formulas -> a * (a - 1) / 2)
+class Solution {
+    public int similarPairs(String[] words) {
+        Map<Set<Character>, Integer> map = new HashMap();
+        for (String word: words) {
+            Set<Character> letters = new HashSet<>();
+            for (char c: word.toCharArray()) {
+                letters.add(c);
+            }
+            map.merge(new TreeSet<Character>(letters), 1, Integer::sum);
+        }
+        int sum = 0;
+        for (int repetion: map.values()) {
+            sum += repetion * (repetion - 1) / 2;
+    }
+        return sum;
+    }
+}

@@ -1,0 +1,17 @@
+package StudyPlans.DP_I;
+
+class Solution {
+    public int climbStairs(int n) {
+        if (n == 1) return n;
+        int a = 1, b = 2, cnt = 2;
+        while (n > cnt) {
+            a += b;
+            if (n == ++cnt) return a;
+            b += a;
+            cnt++;
+        }
+        return b;
+        String st = "sd";
+        st.indexOf("s");
+    }
+}
